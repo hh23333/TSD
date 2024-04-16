@@ -5,6 +5,9 @@
 
 The *official* repository for [Part Representation Learning with Teacher-Student Decoder for Occluded Person Re-identification](https://pan.baidu.com/s/16RbxJOGRwHX6bLHlCFCyPw?pwd=ald6)
 
+# News!
+
+ICASSP 2024 Presentation Slides, Posters, and videos are available [here](https://sigport.org/documents/part-representation-learning-teacher-student-decoder-occluded-person-re-identification)
 
 ## Pipeline
 

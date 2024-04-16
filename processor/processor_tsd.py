@@ -298,3 +298,51 @@ def do_inference_part_new(cfg,
     for r in [1, 5, 10]:
         logger.info("NTP CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc_NTP[r - 1]))
     return cmc[0], cmc[4]
+
+def do_vis_attn(cfg,
+                 model,
+                 val_loader,
+                 num_query):
+    device = "cuda"
+    logger = logging.getLogger("transreid.test")
+    logger.info("Enter inferencing")
+
+    evaluator = w_R1_mAP_eval(num_query, max_rank=50, feat_norm=cfg.TEST.FEAT_NORM)
+
+    evaluator.reset()
+
+    if device:
+        if torch.cuda.device_count() > 1:
+            print('Using {} GPUs for inference'.format(torch.cuda.device_count()))
+            model = nn.DataParallel(model)
+        model.to(device)
+
+    model.eval()
+    img_path_list = []
+
+    output_dir = os.path.join(cfg.OUTPUT_DIR, 'vis_attn_')
+    os.makedirs(output_dir, exist_ok=True)
+
+    for n_iter, (img, pid, camid, camids, target_view, imgpath) in enumerate(val_loader):
+        with torch.no_grad():
+            img = img.to(device)
+            camids = camids.to(device)
+            target_view = target_view.to(device)
+            feat, visb, attn_out = model(img, cam_label=camids, view_label=target_view, return_attn=True)
+
+            # visualize_attn(attn_out[-1:], imgpath, vis_dir=output_dir)
+            # joint_attn = rollout_attn(attn_out)
+            joint_attn = mean_attn([attn_out])
+            # print(imgpath)
+            visualize_attn_decoder(joint_attn, imgpath, num_attr=cfg.MODEL.NUM_PARTS+1, vis_dir=output_dir, score=visb)
+            # visualize_attn_max(joint_attn, imgpath, num_attr=4, vis_dir=output_dir)
+            # evaluator.update((feat, visb, pid, camid))
+            evaluator.update((feat[:, :2], visb[:, :2], pid, camid))
+            img_path_list.extend(imgpath)
+
+    cmc, mAP, _, _, _, _, _ = evaluator.compute()
+    logger.info("Validation Results ")
+    logger.info("mAP: {:.1%}".format(mAP))
+    for r in [1, 5, 10]:
+        logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
+    return cmc[0], cmc[4]

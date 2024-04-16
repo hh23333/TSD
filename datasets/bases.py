@@ -155,8 +155,8 @@ class ImageDataset_M(Dataset):
         #
         if self.with_mask:
             mask_dir = osp.join(osp.dirname(osp.dirname(img_path)), 'masks/pifpaf_maskrcnn_filtering')
-            mask_path = osp.join(img_path.split('/')[-2], img_path.split('/')[-1]+'.confidence_fields.npy')
-            # mask_path = osp.join(img_path.split('/')[-2], img_path.split('/')[-1].split('.')[0]+'.npy')
+            # mask_path = osp.join(img_path.split('/')[-2], img_path.split('/')[-1]+'.confidence_fields.npy')
+            mask_path = osp.join(img_path.split('/')[-2], img_path.split('/')[-1].split('.')[0]+'.npy')
             mask_path = osp.join(mask_dir, mask_path)
             mask = read_masks(mask_path)
             load_dict.update({'mask': mask})

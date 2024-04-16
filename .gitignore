@@ -102,6 +102,8 @@ GitHub.sublime-settings
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 
+.vscode/
+
 # Gradle:
 .idea/**/gradle.xml
 .idea/**/libraries

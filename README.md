@@ -10,7 +10,7 @@ The *official* repository for [Part Representation Learning with Teacher-Student
 ICASSP 2024 Presentation Slides, Posters, and videos are available [here](https://sigport.org/documents/part-representation-learning-teacher-student-decoder-occluded-person-re-identification)
 
 # Meeting
-Zoom [link](https://us05web.zoom.us/j/82943171497?pwd=JDa89A5PSLb0ptTsNKeLDbUGcYtjX5.1) for poster section at Wed, 17 Apr, 13:10 - 15:10 (UTC +9)
+Zoom [link](https://us05web.zoom.us/j/89579088333?pwd=ZXZhbObR88aa0da1zv9wOgZAtn7r6w.1) for poster section at Wed, 17 Apr, 13:10 - 15:10 (UTC +9)
 
 ## Pipeline
 
